@@ -7,9 +7,11 @@ Tugas Games Survival Shooter, game ini merupakan game tembak tembakan dimana pla
 Muhammad Setiawan | ID AGATE : 437
 
 ## Reminder
+
 Don't forget to ⭐️ this project
 
 ## How To Run
+
 Player hanya perlu mengarahkan cursor kearah enemy dan tekan click kiri pada mouse untuk menembak
 
 ## Features & Keybinds
@@ -17,7 +19,11 @@ Player hanya perlu mengarahkan cursor kearah enemy dan tekan click kiri pada mou
 - This is a 1 player game
 - Controls:
   - Klik kiri pada mouse untuk menembak
-  
+
+## Build Releases
+
+Link : https://github.com/MSetiawan2005/Tugas-SurvivalShooter/releases/tag/v1.0 
+
 ## Additional Features
 - Sfx
 - Backsound relax music
