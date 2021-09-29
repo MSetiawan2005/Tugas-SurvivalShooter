@@ -6,36 +6,36 @@ public class PlayerShooting : MonoBehaviour
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
     
-    private readonly float _effectsDisplayTime = 0.2f;
-    private AudioSource _gunAudio;
-    private Light _gunLight;
-    private LineRenderer _gunLine;
-    private ParticleSystem _gunParticles;
-    private int _shootableMask;
-    private RaycastHit _shootHit;
-    private Ray _shootRay;
+    private readonly float effectsDisplayTime = 0.2f;
+    private AudioSource gunAudio;
+    private Light gunLight;
+    private LineRenderer gunLine;
+    private ParticleSystem gunParticles;
+    private int shootableMask;
+    private RaycastHit shootHit;
+    private Ray shootRay;
 
-    private float _timer;
+    private float timer;
 
     private void Awake()
     {
-        _shootableMask = LayerMask.GetMask("Shootable");
-        _gunParticles = GetComponent<ParticleSystem>();
-        _gunLine = GetComponent<LineRenderer>();
-        _gunAudio = GetComponent<AudioSource>();
-        _gunLight = GetComponent<Light>();
+        shootableMask = LayerMask.GetMask("Shootable");
+        gunParticles = GetComponent<ParticleSystem>();
+        gunLine = GetComponent<LineRenderer>();
+        gunAudio = GetComponent<AudioSource>();
+        gunLight = GetComponent<Light>();
     }
 
     private void Update()
     {
-        _timer += Time.deltaTime;
+        timer += Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && _timer >= timeBetweenBullets)
+        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets)
         {
             Shoot();
         }
 
-        if (_timer >= timeBetweenBullets * _effectsDisplayTime)
+        if (timer >= timeBetweenBullets * effectsDisplayTime)
         {
             DisableEffects();
         }
@@ -43,41 +43,41 @@ public class PlayerShooting : MonoBehaviour
 
     public void DisableEffects()
     {
-        _gunLine.enabled = false;
-        _gunLight.enabled = false;
+        gunLine.enabled = false;
+        gunLight.enabled = false;
     }
 
     public void Shoot()
     {
-        _timer = 0f;
+        timer = 0f;
 
-        _gunAudio.Play();
+        gunAudio.Play();
 
-        _gunLight.enabled = true;
+        gunLight.enabled = true;
 
-        _gunParticles.Stop();
-        _gunParticles.Play();
+        gunParticles.Stop();
+        gunParticles.Play();
 
-        _gunLine.enabled = true;
-        _gunLine.SetPosition(0, transform.position);
+        gunLine.enabled = true;
+        gunLine.SetPosition(0, transform.position);
 
-        _shootRay.origin = transform.position;
-        _shootRay.direction = transform.forward;
+        shootRay.origin = transform.position;
+        shootRay.direction = transform.forward;
 
-        if (Physics.Raycast(_shootRay, out _shootHit, range, _shootableMask))
+        if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
-            var enemyHealth = _shootHit.collider.GetComponent<EnemyHealth>();
+            var enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
 
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damagePerShot, _shootHit.point);
+                enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
 
-            _gunLine.SetPosition(1, _shootHit.point);
+            gunLine.SetPosition(1, shootHit.point);
         }
         else
         {
-            _gunLine.SetPosition(1, _shootRay.origin + _shootRay.direction * range);
+            gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
     }
 }
